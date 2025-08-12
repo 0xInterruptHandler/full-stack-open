@@ -1,21 +1,21 @@
 import { useState } from 'react'
 
-// Botón reutilizable
+// Botón genérico para enviar feedback
 const Button = ({ onClick, text }) => (
   <button onClick={onClick} style={{ marginRight: 8, padding: '8px 12px' }}>
     {text}
   </button>
 )
 
-// Fila de estadísticas
-const StatisticsLine = ({ text, value }) => (
+// Fila para mostrar una estadística
+const StatisticLine = ({ text, value }) => (
   <tr>
     <td>{text}</td>
     <td>{value}</td>
   </tr>
 )
 
-// Componente de estadísticas (fuera de App)
+// Componente para mostrar todas las estadísticas
 const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad
   const average = total === 0 ? 0 : (good - bad) / total
@@ -28,17 +28,18 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <table>
       <tbody>
-        <StatisticsLine text="Good" value={good} />
-        <StatisticsLine text="Neutral" value={neutral} />
-        <StatisticsLine text="Bad" value={bad} />
-        <StatisticsLine text="Total" value={total} />
-        <StatisticsLine text="Average" value={average.toFixed(1)} />
-        <StatisticsLine text="Positive" value={`${positive.toFixed(1)} %`} />
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="total" value={total} />
+        <StatisticLine text="average" value={average.toFixed(1)} />
+        <StatisticLine text="positive" value={`${positive.toFixed(1)} %`} />
       </tbody>
     </table>
   )
 }
 
+// Componente raíz
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)

@@ -15,25 +15,37 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
-  // Cambia a una anécdota aleatoria
   const handleNextAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length)
     setSelected(randomIndex)
   }
 
-  // Vota la anécdota actual
   const handleVote = () => {
     const copy = [...votes]
     copy[selected] += 1
     setVotes(copy)
   }
 
+  // Encuentra el índice de la anécdota con más votos
+  const mostVotedIndex = votes.indexOf(Math.max(...votes))
+
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
+      <h2>Anecdote of the day</h2>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={handleVote}>vote</button>
       <button onClick={handleNextAnecdote}>next anecdote</button>
+
+      <h2>Anecdote with most votes</h2>
+      {votes[mostVotedIndex] > 0 ? (
+        <>
+          <p>{anecdotes[mostVotedIndex]}</p>
+          <p>has {votes[mostVotedIndex]} votes</p>
+        </>
+      ) : (
+        <p>No votes yet</p>
+      )}
     </div>
   )
 }

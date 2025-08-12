@@ -1,11 +1,13 @@
 import { useState } from 'react'
 
+// Botón reutilizable
 const Button = ({ onClick, text }) => (
   <button onClick={onClick} style={{ marginRight: 8, padding: '8px 12px' }}>
     {text}
   </button>
 )
 
+// Fila de estadísticas
 const StatisticsLine = ({ text, value }) => (
   <tr>
     <td>{text}</td>
@@ -13,6 +15,7 @@ const StatisticsLine = ({ text, value }) => (
   </tr>
 )
 
+// Componente de estadísticas (fuera de App)
 const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad
   const average = total === 0 ? 0 : (good - bad) / total

@@ -6,14 +6,35 @@ const Button = ({ onClick, text }) => (
   </button>
 )
 
-const Statistics = ({ good, neutral, bad }) => (
-  <div>
-    <h2>Estadísticas</h2>
-    <div>Good: {good}</div>
-    <div>Neutral: {neutral}</div>
-    <div>Bad: {bad}</div>
-  </div>
+const StatisticsLine = ({ text, value }) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 )
+
+const Statistics = ({ good, neutral, bad }) => {
+  const total = good + neutral + bad
+  const average = total === 0 ? 0 : (good - bad) / total
+  const positive = total === 0 ? 0 : (good / total) * 100
+
+  if (total === 0) {
+    return <p>No feedback given</p>
+  }
+
+  return (
+    <table>
+      <tbody>
+        <StatisticsLine text="Good" value={good} />
+        <StatisticsLine text="Neutral" value={neutral} />
+        <StatisticsLine text="Bad" value={bad} />
+        <StatisticsLine text="Total" value={total} />
+        <StatisticsLine text="Average" value={average.toFixed(1)} />
+        <StatisticsLine text="Positive" value={`${positive.toFixed(1)} %`} />
+      </tbody>
+    </table>
+  )
+}
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -31,6 +52,7 @@ const App = () => {
         <Button onClick={() => setBad(bad + 1)} text="bad" />
       </div>
 
+      <h2>Statistics</h2>
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
